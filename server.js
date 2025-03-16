@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const categories = require('./Data/categories');
 const app = express();
 const port = 3000;
 
@@ -30,6 +31,22 @@ app.get('/products/:id', (req, res) => {
         res.status(404).send('Product niet gevonden');
     }
 });
+
+// Category endpoints -- Youssri
+app.get('/categories', (req, res) => {
+    res.json(categories);
+});
+
+app.get('/categories/:id', (req, res) => {
+    const category = categories.find(c => c.id === parseInt(req.params.id));
+    if (category) {
+        res.json(category);
+    } else {
+        res.status(404).send('Categorie niet gevonden');
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`Backend draait op http://localhost:${port}`);
